@@ -122,7 +122,27 @@ $ hexo new "My New Post"
 但是这样就有点违反使用Org Mode的原则了，是不是有其他什么方法，带解决！
 ** 发布到github page
 首先，得有一个github账号，没有就注册一个，注册完之后，新建一个repository，repository的名字为：github用户名.github.io。
-
+需要建一个hexo分支用于存储hexo项目的所有文件，具体操作如下
+#+BEGIN_SRC sh
+cd ~/myblog
+hexo clean
+git init
+git checkout -b hexo
+git add .
+git commit -m 'first commit'
+git remote add origin git@smashell.github.com:smashell/smashell.github.io.git
+git push -u origin hexo
+#+END_SRC
+这样在smashell.github.io库中新建了一个hexo分支，文件也都上传到github上去了。
+然后，把生成的静态内容放到master分支中去。
+#+BEGIN_SRC sh
+git checkout master
+hexo generate
+cd public
+git add .
+git commit -m 'first commit'
+git push -u origin master
+#+END_SRC
 * 结果
 以前没怎么写过博客，写的都是些短篇内容，现在写博客才知道，要想写一篇好的内容真是不容易啊！
 但是，毕竟向前跨出了一步，虽然有点晚，但是总比不做强。

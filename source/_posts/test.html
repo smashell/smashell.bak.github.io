@@ -207,11 +207,37 @@ tags: [&#38543;&#31508;]
 <div class="outline-text-3" id="text-3-6">
 <p>
 首先，得有一个github账号，没有就注册一个，注册完之后，新建一个repository，repository的名字为：github用户名.github.io。
+需要建一个hexo分支用于存储hexo项目的所有文件，具体操作如下
 </p>
-</div>
-</div>
-</div>
+<div class="org-src-container">
 
+<pre class="src src-sh"><span style="color: #00ff00;">cd</span> ~/myblog
+hexo clean
+git init
+git checkout -b hexo
+git add .
+git commit -m <span style="color: #00ffff;">'first commit'</span>
+git remote add origin git@smashell.github.com:smashell/smashell.github.io.git
+git push -u origin hexo
+</pre>
+</div>
+<p>
+这样在smashell.github.io库中新建了一个hexo分支，文件也都上传到github上去了。
+然后，把生成的静态内容放到master分支中去。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">git checkout master
+hexo generate
+<span style="color: #00ff00;">cd</span> public
+git add .
+git commit -m <span style="color: #00ffff;">'first commit'</span>
+git push -u origin master
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> 结果</h2>
 <div class="outline-text-2" id="text-4">
