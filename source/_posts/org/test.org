@@ -1,0 +1,130 @@
+#+OPTIONS: toc:nil 
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_HTML
+title: 建博记
+date: 2015-10-07
+category: 随笔
+description: 建立个人博客的前前后后
+tags: [随笔]
+toc: true
+---
+#+END_HTML
+
+* 起因
+现在看来博客貌似是个过时的东西，都微博、微信了，还有人写这个？但是作为一个码农，如果没有一个独立博客，感觉都不好意思跟别人打招呼。
+而且，看了李笑来老师的[[http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/][为什么你应该（从现在开始就）写博客]], 觉得不写一个博客就真的说不过去了。最重要的是，自己对于知识的沉淀和输出确实不够。
+于是，决定建立一个自己的独立博客。
+* 寻寻觅觅
+决定建独立博客之后，就开始考虑实现方案了。
+总的来说，过程是曲折的！
+首先，不管用什么方法写博客、生成静态内容，使用github pages托管博客内容是没有疑问的；
+其次，因为最近在用Org Mode做TODO管理，觉得是一个很不错的工具，就想使用Org Mode写博客。
+那么问题来了，用什么生成html页面呢？
+大概也调研了一下，主要是使用Org Mode导出静态页面或者使用第三方工具的方法：
+- 最简单的方法，通过增加配置来导出html页面，主要参考这个：[[http://www.kuqin.com/shuoit/20150804/347399.html][使用Emacs org-mode + GitHub Pages来写博客]]
+- 使用现有的一些博客工具或插件：[[http://orgmode.org/worg/org-blog-wiki.html][Blogging Tools]]
+第一种方法比较原生态，可定制性强，但是目前来说对emacs不太熟悉，就不想花太多时间；第二种也尝试了几个工具，比如o-blog、org-page，在使用中都有各种各样的问题。
+，后来又发现了[[https://github.com/LeslieZhu/OrgNote][OrgNote]], 安装使用都比较简单，比较满足自己的要求，但是theme个人不太喜欢。后来发现hexo也不错，跟Org Mode结合的方法一个是直接生成html页面；
+另一个是有个emacs的插件[[https://github.com/coldnew/org-hexo][org-hexo]]， 但是这个插件依赖太多，搞的自己头晕眼花，只好暂时作罢，等emacs熟悉了，再回头研究研究。
+所以，最后决定使用hexo+Org Mode的org-publish-current-file的方式来管理博客内容。
+* hexo + Org Mode + github pages
+** 安装hexo
+*** 安装Node.js
+可以使用[[https://github.com/creationix/nvm][nvm]] 安装Node.js，如果还没有安装nvm，则先安装它。
+#+NAME: wget
+#+BEGIN_SRC sh
+wget https://raw.github.com/creationix/nvm/master/install.sh
+sh install.sh
+#+END_SRC
+nvm安装好之后，可以使用nvm安装Node.js。
+#+BEGIN_SRC sh
+nvm install v4.1.2
+#+END_SRC
+**ps:** 我在使用这种方法安装的时候，一直卡着不动。于是从[[http://nodejs.org/][官网]] 下载了安装包，直接安装，很快。
+*** 安装hexo
+直接使用npm安装hexo（也是很慢，而且也没个进度，体验很不好）。
+#+BEGIN_SRC sh
+npm install -g hexo-cli
+#+END_SRC
+hexo的执行脚本没有加入到PATH变量，直接加一下就可以了
+#+BEGIN_SRC sh
+export PATH= /usr/local/lib/node_modules/hexo-cli/bin/:$PATH
+#+END_SRC
+** 快速使用hexo
+安装好hexo之后，可以看下效果。
+#+BEGIN_SRC sh
+cd ~
+hexo init myblog
+cd myblog
+npm install
+hexo server
+#+END_SRC
+**ps:** 如果npm install失败的话，使用sudo安装。
+启动成功后，在浏览器输入http://0.0.0.0:4000, 看到页面加载就大功告成！
+** 配置hexo站点
+配置站点信息，主要修改_config.yml文件，具体可以看这个文件里面的内容。
+** 配置Org Mode
+因为使用Org Mode编写博客，而hexo不支持org文件，所以，需要配置Org Mode将org文件导出html，放在hexo项目的source/_posts目录下。
+具体配置如下：
+#+BEGIN_SRC emacs-lisp
+(setq org-publish-project-alist
+      '(
+        ("org-hexo"
+         :base-directory "~/myblog/source/_posts/org/"
+         :base-extension "org"
+         :publishing-directory "~/myblog/source/_posts/"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4             ; Just the default for this project.
+         :auto-preamble t
+         :body-only t
+         )
+        ("org-static"
+         :base-directory "~/myblog/source/_posts/org/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/myblog/source/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+        ("org" :components ("org-hexo" "org-static"))
+        ))
+
+#+END_SRC
+org-hexo将org文件转成html文件，org-static直接复制base-extension匹配的文件到指定目录。org将org-hexo和org-static组合起来，完成转换和拷贝静态文件的操作。
+使用的时候，在emacs里直接键入M-x org-publish-current-file或者org-publish-current-project既可把org文件转成html文件并拷贝到hexo项目的source/_posts目录下。
+这样，hexo就可以正常处理这些文件。
+** 写博客（org文件）
+写org博客的时候，hexo对文件格式有一定的要求，比如文章标题，发布日期，tags等，定义的格式可以是yaml或者json，具体见[[https://hexo.io/docs/front-matter.html][Front Matter]]。
+那我们需要在org文件的最开始加入一些标记：
+#+BEGIN_SRC sh
+#+OPTIONS: toc:nil 
+#+STARTUP: showall indent
+#+STARTUP: hidestars
+#+BEGIN_HTML
+title: 建博记
+date: 2015-10-07
+category: 随笔
+description: 建立个人博客的前前后后
+tags: [随笔]
+---
+#+END_HTML
+#+END_SRC
+关于源码显示的问题，直接使用Org Mode的#+BEGIN_SRC、#+END_SRC的话，渲染的结果不好看，有问题。
+可以使用下面的方法可以解决这个问题：
+#+BEGIN_SRC sh
+#+BEGIN_HTML
+``` bash
+$ hexo new "My New Post"
+```
+#+END_HTML
+#+END_SRC
+但是这样就有点违反使用Org Mode的原则了，是不是有其他什么方法，带解决！
+** 发布到github page
+首先，得有一个github账号，没有就注册一个，注册完之后，新建一个repository，repository的名字为：github用户名.github.io。
+
+* 结果
+以前没怎么写过博客，写的都是些短篇内容，现在写博客才知道，要想写一篇好的内容真是不容易啊！
+但是，毕竟向前跨出了一步，虽然有点晚，但是总比不做强。
+希望自己可以坚持下去。
+
