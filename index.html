@@ -112,7 +112,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/emacs/" style="font-size: 10px;">emacs</a> <a href="/tags/orgmode/" style="font-size: 10px;">orgmode</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
 					</div>
 				</section>
 				
@@ -182,171 +182,10 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-org-mode-tutorial" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/10-10-org-mode-tutorial.html" class="article-date">
-  	<time datetime="2015-10-09T16:00:00.000Z" itemprop="datePublished">2015-10-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10-10-org-mode-tutorial.html">Org Mode新手指南</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> 简介</h2>
-<div class="outline-text-2" id="text-1">
-</div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 什么是Org Mode</h3>
-<div class="outline-text-3" id="text-1-1">
-<p>
-Org Mode是Emacs的一种纯文本编辑模式，支持内容分级显示。你可以用它来进行GTD、管理TODO列表、记笔记（这个类似markdown）、项目计划安排等等，功能强大的一塌糊涂。
-我就是因为这个才开始用emacs的，之前一直用vim。
-</p>
-</div>
-</div>
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Org Mode vs Markdown</h3>
-<div class="outline-text-3" id="text-1-2">
-<p>
-Markdown只是一种轻量级的标记语法（markup syntax），它的哲学思想就是易写、易读<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>。对于没有emacs经验的人来说，Markdown入手更简单。
-Org Mode除了具有标记语法的功能外，还有很多其他的功能，比如GTD、TODO列表管理。而且，Org Mode还能导出Markdown格式。
-如果只是记笔记的话，那两者皆可。但是，如果要进行其他工作，比如GTD，那只能Org Mode了。
-总之，Org Mode功能更强大，也更复杂，能够胜任一切纯文本工作。
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> 安装</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-从emacs23开始已经默认包含orgmode了，所以，无需安装。直接编辑*.org*扩展名的文件即可进入org-mode编辑模式。
-当然，你也可以手工安装org-mode的最新版本：
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh"><span style="color: #00ff00;">cd</span> ~/.emacs.d/plugins
-git clone git://orgmode.org/org-mode.git
-</pre>
-</div>
-<p>
-我将其放在了~/.emacs.d/plugins目录下，你也可以放在其他地方。
-这样就安装好了，但是还不生效，需要配置一下，将org-mode目录加入load-path，具体怎么设置见下一小节。
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> 配置及准备</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-可以在~/.emacs中加入配置，或者加入到~/.emacs.d/init.el中，推荐后者，可以实现配置分离。方便管理。
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh">(add-to-list <span style="color: #00ffff;">'load-path (expand-file-name "~/.emacs.d/plugins/org-mode/lisp"))</span>
-<span style="color: #00ffff;">(require '</span>org)
-
-; Standard key bindings
-(global-set-key <span style="color: #00ffff;">"\C-cl"</span> <span style="color: #00ffff;">'org-store-link)</span>
-<span style="color: #00ffff;">(global-set-key "\C-ca" '</span>org-agenda)
-(global-set-key <span style="color: #00ffff;">"\C-cc"</span> <span style="color: #00ffff;">'org-capture)</span>
-<span style="color: #00ffff;">(global-set-key "\C-cb" '</span>org-iswitchb)
-</pre>
-</div>
-<p>
-好了，现在可以开始org mode之旅了。
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh">emacs test.org
-</pre>
-</div>
-
-<div class="figure">
-<p><img src="../img/hello-org-mode.png" alt="hello-org-mode.png">
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> TODO列表</h2>
-</div>
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> 导出</h2>
-</div>
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> 移动app</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-ksjdkfsjkdf
-</p>
-</div>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
-markdown philosopy: <a href="http://daringfireball.net/projects/markdown/syntax#philosophy" target="_blank" rel="external">http://daringfireball.net/projects/markdown/syntax#philosophy</a>
-</p></div>
-
-
-</div>
-</div>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/emacs/">emacs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/orgmode/">orgmode</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术/">技术</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
     <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/10-07-test.html" class="article-date">
+      <a href="/pages/2015-10-07-test.html" class="article-date">
   	<time datetime="2015-10-06T16:00:00.000Z" itemprop="datePublished">2015-10-07</time>
 </a>
     </div>
@@ -360,7 +199,7 @@ markdown philosopy: <a href="http://daringfireball.net/projects/markdown/syntax#
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10-07-test.html">建博记</a>
+      <a class="article-title" href="/pages/2015-10-07-test.html">建博记</a>
     </h1>
   
 
