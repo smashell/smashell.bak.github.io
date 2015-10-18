@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://smashell.github.io/pages/2015-10-07-test.html">
 <meta property="og:site_name" content="smashell's blog">
 <meta property="og:description" content="建立个人博客的前前后后">
-<meta property="og:updated_time" content="2015-10-15T11:31:51.000Z">
+<meta property="og:updated_time" content="2015-10-18T13:07:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="建博记">
 <meta name="twitter:description" content="建立个人博客的前前后后">
@@ -113,7 +113,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/emacs/" style="font-size: 10px;">emacs</a> <a href="/tags/orgmode/" style="font-size: 10px;">orgmode</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
 					</div>
 				</section>
 				
@@ -223,8 +223,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span> </h2>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 起因</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 现在看来博客貌似是个过时的东西，都微博、微信了，还有人写这个？但是作为一个码农，如果没有一个独立博客，感觉都不好意思跟别人打招呼。
@@ -233,8 +233,8 @@
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2"><span class="section-number-2">2</span> </h2>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 寻寻觅觅</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 决定建独立博客之后，就开始考虑实现方案了。
@@ -245,8 +245,10 @@
 大概也调研了一下，主要是使用Org Mode导出静态页面或者使用第三方工具的方法：
 </p>
 <ul class="org-ul">
-<li>最简单的方法，通过增加配置来导出html页面，主要参考这个：<a href="http://www.kuqin.com/shuoit/20150804/347399.html" target="_blank" rel="external">使用Emacs org-mode + GitHub Pages来写博客</a></li>
-<li>使用现有的一些博客工具或插件：<a href="http://orgmode.org/worg/org-blog-wiki.html" target="_blank" rel="external">Blogging Tools</a></li>
+<li>最简单的方法，通过增加配置来导出html页面，主要参考这个：<a href="http://www.kuqin.com/shuoit/20150804/347399.html" target="_blank" rel="external">使用Emacs org-mode + GitHub Pages来写博客</a>
+</li>
+<li>使用现有的一些博客工具或插件：<a href="http://orgmode.org/worg/org-blog-wiki.html" target="_blank" rel="external">Blogging Tools</a>
+</li>
 </ul>
 <p>
 第一种方法比较原生态，可定制性强，但是目前来说对emacs不太熟悉，就不想花太多时间；第二种也尝试了几个工具，比如o-blog、org-page，在使用中都有各种各样的问题。
@@ -256,21 +258,21 @@
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline11" class="outline-2">
-<h2 id="orgheadline11"><span class="section-number-2">3</span> </h2>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> hexo + Org Mode + github pages</h2>
 <div class="outline-text-2" id="text-3">
-</div><div id="outline-container-orgheadline5" class="outline-3">
-<h3 id="orgheadline5"><span class="section-number-3">3.1</span> </h3>
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 安装hexo</h3>
 <div class="outline-text-3" id="text-3-1">
-</div><div id="outline-container-orgheadline3" class="outline-4">
-<h4 id="orgheadline3"><span class="section-number-4">3.1.1</span> </h4>
+</div><div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> 安装Node.js</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 可以使用<a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a> 安装Node.js，如果还没有安装nvm，则先安装它。
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh" id="orgsrcblock1">wget https://raw.github.com/creationix/nvm/master/install.sh
+<pre class="src src-sh" id="wget">wget https://raw.github.com/creationix/nvm/master/install.sh
 sh install.sh
 </pre>
 </div>
@@ -287,8 +289,8 @@ nvm安装好之后，可以使用nvm安装Node.js。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline4" class="outline-4">
-<h4 id="orgheadline4"><span class="section-number-4">3.1.2</span> </h4>
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> 安装hexo</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 直接使用npm安装hexo（也是很慢，而且也没个进度，体验很不好）。
@@ -309,8 +311,8 @@ hexo的执行脚本没有加入到PATH变量，直接加一下就可以了
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline6" class="outline-3">
-<h3 id="orgheadline6"><span class="section-number-3">3.2</span> </h3>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 快速使用hexo</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 安装好hexo之后，可以看下效果。
@@ -326,23 +328,23 @@ hexo server
 </div>
 <p>
 <b><b>ps:</b></b> 如果npm install失败的话，使用sudo安装。
-启动成功后，在浏览器输入<a href="http://0.0.0.0:4000/" target="_blank" rel="external">http://0.0.0.0:4000/</a>, 看到页面加载就大功告成！
+启动成功后，在浏览器输入<a href="http://0.0.0.0:4000" target="_blank" rel="external">http://0.0.0.0:4000</a>, 看到页面加载就大功告成！
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline7" class="outline-3">
-<h3 id="orgheadline7"><span class="section-number-3">3.3</span> </h3>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 配置hexo站点</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-配置站点信息，主要修改<sub>config.yml文件</sub>，具体可以看这个文件里面的内容。
+配置站点信息，主要修改<sub>config</sub>.yml文件，具体可以看这个文件里面的内容。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline8" class="outline-3">
-<h3 id="orgheadline8"><span class="section-number-3">3.4</span> </h3>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> 配置Org Mode</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
-因为使用Org Mode编写博客，而hexo不支持org文件，所以，需要配置Org Mode将org文件导出html，放在hexo项目的source/<sub>posts目录下</sub>。
+因为使用Org Mode编写博客，而hexo不支持org文件，所以，需要配置Org Mode将org文件导出html，放在hexo项目的source/<sub>posts目录下。</sub>
 具体配置如下：
 </p>
 <div class="org-src-container">
@@ -372,13 +374,13 @@ hexo server
 </div>
 <p>
 org-hexo将org文件转成html文件，org-static直接复制base-extension匹配的文件到指定目录。org将org-hexo和org-static组合起来，完成转换和拷贝静态文件的操作。
-使用的时候，在emacs里直接键入M-x org-publish-current-file或者org-publish-current-project既可把org文件转成html文件并拷贝到hexo项目的source/<sub>posts目录下</sub>。
+使用的时候，在emacs里直接键入M-x org-publish-current-file或者org-publish-current-project既可把org文件转成html文件并拷贝到hexo项目的source/<sub>posts目录下。</sub>
 这样，hexo就可以正常处理这些文件。
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline9" class="outline-3">
-<h3 id="orgheadline9"><span class="section-number-3">3.5</span> </h3>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> 写博客（org文件）</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 写org博客的时候，hexo对文件格式有一定的要求，比如文章标题，发布日期，tags等，定义的格式可以是yaml或者json，具体见<a href="https://hexo.io/docs/front-matter.html" target="_blank" rel="external">Front Matter</a>。
@@ -400,7 +402,7 @@ tags: [&#38543;&#31508;]
 </pre>
 </div>
 <p>
-关于源码显示的问题，直接使用Org Mode的#+BEGIN<sub>SRC</sub>、#+END<sub>SRC的话</sub>，渲染的结果不好看，有问题。
+关于源码显示的问题，直接使用Org Mode的#+BEGIN<sub>SRC、</sub>#+END<sub>SRC的话，渲染的结果不好看，有问题。</sub>
 可以使用下面的方法可以解决这个问题：
 </p>
 <div class="org-src-container">
@@ -417,8 +419,8 @@ tags: [&#38543;&#31508;]
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10"><span class="section-number-3">3.6</span> </h3>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> 发布到github page</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 首先，得有一个github账号，没有就注册一个，注册完之后，新建一个repository，repository的名字为：github用户名.github.io。
@@ -453,8 +455,8 @@ git push -u origin master
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline12" class="outline-2">
-<h2 id="orgheadline12"><span class="section-number-2">4</span> </h2>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 结果</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 以前没怎么写过博客，写的都是些短篇内容，现在写博客才知道，要想写一篇好的内容真是不容易啊！
@@ -470,6 +472,20 @@ git push -u origin master
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/pages/2015-10-18-org-mode-tutorial.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Org Mode入门指南
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
