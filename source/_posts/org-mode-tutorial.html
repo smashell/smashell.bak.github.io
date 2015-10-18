@@ -1,0 +1,476 @@
+title: Org Mode入门指南
+date: 2015-10-18
+category: 技术
+description: 这是一篇针对Org Mode新手的入门指南
+tags: [emacs,orgmode]
+toc: true
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 什么是Org Mode</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Org Mode是Emacs的一种纯文本编辑模式，支持内容分级显示。你可以用它来进行GTD、管理TODO列表、记笔记（这个类似markdown）、项目计划安排等等，功能强大的一塌糊涂。
+我就是因为这个才开始用emacs的，之前一直用vim。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Org Mode vs Markdown</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Markdown只是一种轻量级的标记语法（markup syntax），它的哲学思想就是易写、易读<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>。对于没有emacs经验的人来说，Markdown入手更简单。
+Org Mode除了具有标记语法的功能外，还有很多其他的功能，比如GTD、TODO列表管理。而且，Org Mode还能导出Markdown格式。
+如果只是记笔记的话，那两者皆可。但是，如果要进行其他工作，比如GTD，那只能Org Mode了。
+总之，Org Mode功能更强大，也更复杂，能够胜任一切纯文本工作。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 安装</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+从emacs23开始已经默认包含orgmode了，所以，无需安装。直接编辑*.org*扩展名的文件即可进入org-mode编辑模式。
+当然，你也可以手工安装org-mode的最新版本：
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #00ff00;">cd</span> ~/.emacs.d/plugins
+git clone git://orgmode.org/org-mode.git
+</pre>
+</div>
+<p>
+我将其放在了~/.emacs.d/plugins目录下，你也可以放在其他地方。
+这样就安装好了，但是还不生效，需要配置一下，将org-mode目录加入load-path，具体怎么设置见下一小节。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 配置及准备</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+可以在~/.emacs中加入配置，或者加入到~/.emacs.d/init.el中，推荐后者，可以实现配置分离。方便管理。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">(add-to-list <span style="color: #00ffff;">'load-path (expand-file-name "~/.emacs.d/plugins/org-mode/lisp"))</span>
+<span style="color: #00ffff;">(require '</span>org)
+
+; Standard key bindings
+(global-set-key <span style="color: #00ffff;">"\C-cl"</span> <span style="color: #00ffff;">'org-store-link)</span>
+<span style="color: #00ffff;">(global-set-key "\C-ca" '</span>org-agenda)
+(global-set-key <span style="color: #00ffff;">"\C-cc"</span> <span style="color: #00ffff;">'org-capture)</span>
+<span style="color: #00ffff;">(global-set-key "\C-cb" '</span>org-iswitchb)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 新建文件</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+好了，现在可以开始org mode之旅了。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">emacs hello.org
+</pre>
+</div>
+<p>
+执行上面命令后的截图如下所示，这就是本文的org文件，如果用过Markdown的，看着应该很亲切吧！
+<img src="../img/hello-org-mode.png" alt="hello-org-mode.png" />
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 基础语法</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 标题</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Org Mode使用 <b>*</b> 标识章节标题，一个 <b>*</b> 表示一级标题，二个星号 <b>**</b> 表示二级标题，以此类推。
+<b>注意：星号后面需要有空格。</b>
+</p>
+<blockquote>
+<p>
+<code>* 标题一</code>
+</p>
+
+<p>
+<code>** 标题二</code>
+</p>
+
+<p>
+<code>*** 标题三</code>
+</p>
+</blockquote>
+<p>
+不同层级以不同颜色标注。常用的快捷键：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">快捷键</th>
+<th scope="col" class="left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">S-tab</td>
+<td class="left">展开、折叠所有章节</td>
+</tr>
+
+<tr>
+<td class="left">Tab</td>
+<td class="left">展开、折叠光标所在章节</td>
+</tr>
+
+<tr>
+<td class="left">M-left/right</td>
+<td class="left">升/降标题</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> 字体</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Org Mode可以很方便的对文字进行加粗、加斜等操作：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">语法</th>
+<th scope="col" class="left">效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>*粗体*</code></td>
+<td class="left"><b>粗体</b></td>
+</tr>
+
+<tr>
+<td class="left"><code>/斜体/</code></td>
+<td class="left"><i>斜体</i></td>
+</tr>
+
+<tr>
+<td class="left"><code>+删除线+</code></td>
+<td class="left"><del>删除线</del></td>
+</tr>
+
+<tr>
+<td class="left"><code>_下划线_</code></td>
+<td class="left"><span class="underline">下划线</span></td>
+</tr>
+
+<tr>
+<td class="left"><code>~等宽字~</code></td>
+<td class="left"><code>等宽字</code></td>
+</tr>
+</tbody>
+</table>
+<p>
+注意：如果在中文的句子中设置字体，两边必须有空格才行。
+可以使用等号转义字符，例如： <code>=*不是粗体*=</code> 将显示成 <code>*不是粗体*</code> 
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> 链接</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Org Mode支持多种超链接，包括内部链接、外部链接、图片、email等。
+链接的格式如下：
+</p>
+<pre class="example">
+[[链接地址][链接描述]]
+
+[[链接地址]]
+</pre>
+<p>
+当在Org Mode下输入链接时，当输入最后一个括号后，会显示成最终链接的形式，输入 <b><b>C-c C-l</b></b> 即可编辑。
+</p>
+</div>
+<div id="outline-container-sec-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1"><span class="section-number-4">5.3.1</span> 内部链接</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+内部链接就是当前文件不同位置之间的链接，它类似html的锚点。使用内部链接，需要首先定义一个跳转的目标：
+</p>
+<pre class="example">
+&lt;&lt;跳转目标&gt;&gt;
+</pre>
+<p>
+然后就可以定义一个链接，这个链接可以跳转到上面定义的目标：
+</p>
+<pre class="example">
+[[跳转目标]]
+
+或者
+
+[[跳转目标][描述]]
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-5-3-2" class="outline-4">
+<h4 id="sec-5-3-2"><span class="section-number-4">5.3.2</span> 外部链接</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<p>
+外部链接跳转到本文档之外，比如url、文件、新闻组、邮件等等。
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">链接格式</th>
+<th scope="col" class="left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>http://www.google.com</code></td>
+<td class="left">链接到网页</td>
+</tr>
+
+<tr>
+<td class="left"><code>file:/home/smashell/images/a.png</code></td>
+<td class="left">连接到文件</td>
+</tr>
+
+<tr>
+<td class="left"><code>/home/smashell/images/a.png</code></td>
+<td class="left">同上</td>
+</tr>
+
+<tr>
+<td class="left"><code>file:project.org</code></td>
+<td class="left">链接到其他org文件</td>
+</tr>
+
+<tr>
+<td class="left"><code>mailto;adnet@galaxy.net</code></td>
+<td class="left">链接到新闻组</td>
+</tr>
+
+<tr>
+<td class="left"><code>irc:/irc.com/#emacs/bob</code></td>
+<td class="left">链接到irc</td>
+</tr>
+</tbody>
+</table>
+<p>
+更多说明参考官方文档<sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-3-3" class="outline-4">
+<h4 id="sec-5-3-3"><span class="section-number-4">5.3.3</span> 快捷键</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">快捷键</th>
+<th scope="col" class="left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">C-c C-l</td>
+<td class="left">创建或修改链接</td>
+</tr>
+
+<tr>
+<td class="left">C-c C-o</td>
+<td class="left">打开链接</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> 表格</h3>
+<div class="outline-text-3" id="text-5-4">
+</div><div id="outline-container-sec-5-4-1" class="outline-4">
+<h4 id="sec-5-4-1"><span class="section-number-4">5.4.1</span> 基本操作</h4>
+<div class="outline-text-4" id="text-5-4-1">
+<p>
+Org Mode提供了方便的表格操作，还提供了类似Excel的表格函数，可以完成简单的运算。
+创建表格很简单，首先输入表头信息：
+</p>
+<pre class="example">
+|编号|名称|说明|
+</pre>
+<p>
+然后在表头的末尾按tab键，则自动插入一行：
+</p>
+<pre class="example">
+| 编号 | 名称 | 说明 |
+|      |      |      |
+</pre>
+<p>
+如果想要表头有底色，则在第二行输入“|-”，然后按tab键即可：
+</p>
+<pre class="example">
+| 编号 | 名称 | 说明 |
+|------+------+------|
+|      |      |      |
+</pre>
+<p>
+在表格插入数据的时候，按Tab键跳到下一个单元格，按Enter键跳到下一行的单元格。如果想要往回跳，同时按着shift键即可。
+</p>
+<pre class="example">
+| 名称  | num1 | num2 | total |
+|-------+------+------+-------|
+| item1 |   12 |    3 |       |
+| item2 |    5 |   20 |       |
+| item3 |    7 |   10 |       |
+</pre>
+<p>
+然后在total列的任意一行中输入 <b>=$2+$3</b> ，然后按 <b>C-u C-c C-c</b> ，铛铛~~，表格自动计算第二列和第三列的结果：
+</p>
+<pre class="example">
+| 名称  | num1 | num2 | total |
+|-------+------+------+-------|
+| item1 |   12 |    3 |    15 |
+| item2 |    5 |   20 |    25 |
+| item3 |    7 |   10 |    17 |
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-5-4-2" class="outline-4">
+<h4 id="sec-5-4-2"><span class="section-number-4">5.4.2</span> 快捷键</h4>
+<div class="outline-text-4" id="text-5-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">快捷键</th>
+<th scope="col" class="left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">C-c C-c</td>
+<td class="left">自动对齐表格</td>
+</tr>
+
+<tr>
+<td class="left">Tab</td>
+<td class="left">跳到下一个单元格</td>
+</tr>
+
+<tr>
+<td class="left">S-Tab</td>
+<td class="left">跳到上一个单元格</td>
+</tr>
+
+<tr>
+<td class="left">Enter</td>
+<td class="left">跳到下方的单元格</td>
+</tr>
+
+<tr>
+<td class="left">S-Enter</td>
+<td class="left">跳到上方的单元格</td>
+</tr>
+
+<tr>
+<td class="left">M-方向键</td>
+<td class="left">移动行/列</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> 脚注</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+脚注可以看成是一种特殊的内部链接，但是有自己的语法格式。下面是插入一个脚注：
+</p>
+<pre class="example">
+[fn:footprint1]或者[fn:数字]
+</pre>
+<p>
+然后在文档的最下方插入：
+</p>
+<pre class="example">
+[fn:footprint1] this is a link: http://orgmode.org
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 导出</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Org格式的文件编辑起来很方便，但是看起来就没那么直观了。幸好，Org Mode提供了丰富的导出功能，比如导出html、pdf等。导出pdf需要LaTeX的支持，需要系统安装想要的LaTeX包。
+而导出html就方便很多，要想导出，直接执行 <b>C-c C-e</b> ，然后会列出一堆可导出的格式，按相应的字母选择即可。
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+markdown philosopy: <a href="http://daringfireball.net/projects/markdown/syntax#philosophy">http://daringfireball.net/projects/markdown/syntax#philosophy</a>
+</p></div>
+
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+External links: <a href="http://higrid.net/c-art-orgmode_basic.htm#sec-2">http://higrid.net/c-art-orgmode_basic.htm#sec-2</a>
+</p></div>
+
+
+</div>
+</div>
